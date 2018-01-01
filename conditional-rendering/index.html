@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>React Components</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    class Login extends React.Component {
+      constructor (props) {
+        super(props);
+        this.state = {
+          loggedIn: false
+        };
+
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+      }
+      handleLoginClick(e) {
+        this.setState({
+          loggedIn: true
+        });
+      }
+      handleLogoutClick(e) {
+        this.setState({
+          loggedIn: false
+        });
+      }
+      render() {
+        let button = null;
+        if (this.state.loggedIn) {
+          button = (<button onClick={this.handleLogoutClick}>Logout</button>);
+        } else {
+          button = (<button onClick={this.handleLoginClick}>Login</button>);
+        }
+
+        return (
+          <div>
+            <Message isLoggedIn={this.state.loggedIn} />
+            {button}
+          </div>
+        )
+      }
+    }
+
+    function Message(prop) {
+      const unreadMsg = ['hey there!'];
+      if (prop.isLoggedIn) {
+        // Write code to get the messages...
+        return (
+          <div>
+            {unreadMsg.length > 0 &&
+              <p>
+                You have unread messages.
+              </p>
+            }
+          </div>
+        )
+      } else {
+        return null;
+      }
+    }
+
+    ReactDOM.render(
+      <Login />,
+      document.getElementById('root')
+    );
+    </script>
+</body>
+
+</html>
