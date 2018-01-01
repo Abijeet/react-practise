@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>TODO - List</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" crossorigin="anonymous">
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <style>
+    #root {
+      max-width: 700px;
+      margin:auto;
+    }
+    #root h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    class App extends React.Component {
+      constructor (props) {
+        super(props);
+        this.state = {
+          notes: [],
+          currentNote: null,
+          noteId: 0
+        };
+
+        this.saveNote = this.saveNote.bind(this);
+        this.deleteNote = this.deleteNote.bind(this);
+        this.editNote = this.editNote.bind(this);
+      }
+      render() {
+        return (
+          <div>
+            <h1>TODO - List</h1>
+            <AddNote saveNote={this.saveNote} text={this.state.currentNote ? this.state.currentNote.text : ''}/>
+            <NoteList notes={this.state.notes} onDelete={this.deleteNote} onEdit={this.editNote}/>
+          </div>
+        );
+      }
+      saveNote (noteText) {
+        if (this.state.currentNote) {
+          this.setState({
+            currentNote: {
+              id: currentNote.id,
+              text: noteText
+            }
+          });
+          this.setState({
+            currentNote: null
+          });
+          return;
+        }
+        let id = ++this.state.noteId;
+        let text = noteText;
+        this.setState(prevState => ({
+          notes: [...prevState.notes, {
+            id,
+            text
+          }]
+        }));
+      }
+      deleteNote (noteToDelete) {
+        this.setState(prevState => ({
+          notes: this.state.notes.filter((note, _) => note.id !== noteToDelete.id)
+        }));
+      }
+      editNote (note) {
+        this.setState({
+          currentNote: note
+        });
+      }
+    }
+
+    class AddNote extends React.Component {
+      constructor (props) {
+        super(props);
+        this.state = {
+          text: ''
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+      render() {
+        return (
+          <form className="form-inline">
+              <input type="text" className="form-control mb-2 mr-sm-2" value={this.state.text} onChange={this.handleChange}/>
+              <button type="submit" className="btn btn-primary mb-2" onClick={this.handleSubmit}>Add</button>
+          </form>
+        );
+      }
+      handleSubmit (e) {
+        e.preventDefault();
+        let noteText = this.state.text;
+        if (!noteText || noteText.trim().length === 0) {
+          alert('No text!');
+          return;
+        }
+
+        this.props.saveNote(this.state.text);
+        this.setState({
+          text: ''
+        });
+      }
+      handleChange(event) {
+        this.setState({text: event.target.value});
+      }
+    }
+
+    class NoteList extends React.Component {
+      constructor (props) {
+        super(props);
+      }
+      render () {
+        const notes = this.props.notes.map((note) => {
+          return <Note source={note} key={note.id} onDelete={this.props.onDelete} onEdit={this.props.onEdit}/>
+        });
+        return (
+          <div className="notes">
+            {notes}
+          </div>
+        );
+      }
+    }
+
+    class Note extends React.Component {
+      constructor (props) {
+        super(props);
+        this.editClick = this.editClick.bind(this);
+        this.deleteClick = this.deleteClick.bind(this);
+      }
+      editClick () {
+        this.props.onEdit(this.props.source);
+      }
+      deleteClick () {
+        let confirm = window.confirm('Are you sure?');
+        if (!confirm) {
+          return;
+        }
+        this.props.onDelete(this.props.source);
+      }
+      render () {
+        return (
+          <div className="note-container container">
+            <div className="row">
+              <div className="note col-sm-10">
+                {this.props.source.text};
+              </div>
+              <button className="btn btn-default" onClick={this.editClick}>Edit</button>
+              <button className="btn btn-danger" onClick={this.deleteClick}>Delete</button>
+            </div>
+          </div>
+        );
+      }
+    }
+
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById('root')
+    );
+    </script>
+</body>
+
+</html>
