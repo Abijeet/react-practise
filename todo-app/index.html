@@ -68,16 +68,22 @@
         // new note
         let newId = ++this.state.noteId;
         this.setState(prevState => ({
-          notes: [...prevState.notes, {
-            id: newId,
-            text
-          }]
+          notes: [...prevState.notes, new MyNote(newId, text)]
         }));
       }
       handleDelete (noteToDelete) {
-        this.setState(prevState => ({
-          notes: this.state.notes.filter((note, _) => note.id !== noteToDelete.id)
-        }));
+        this.setState((prevState) => {
+          let notes = prevState.notes;
+          for (let i = 0; i !== notes.length; ++i) {
+            if (notes[i].id === noteToDelete.id) {
+              notes.splice(i, 1);
+              break;
+            }
+          }
+          return {
+            notes: notes
+          };
+        });
       }
     }
 
@@ -180,6 +186,15 @@
               )}
           </div>
         );
+      }
+    }
+
+    class MyNote {
+      constructor (id, text, isComplete = false, order = 0) {
+        this.id = id;
+        this.text = text;
+        this.isComplete = isComplete;
+        this.order = 0;
       }
     }
 
