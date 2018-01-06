@@ -38,8 +38,8 @@ class Note extends React.Component {
                 {this.props.note.text}
               </div>
               <div className="col-sm-auto">
-                <button className="btn btn-default mr-2" onClick={this.handleEdit}>Edit</button>
-                <button className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
+                <button className="btn btn-success mr-2" onClick={this.handleEdit}><span className="oi oi-pencil"></span></button>
+                <button className="btn btn-danger" onClick={this.handleDelete}><span className="oi oi-trash"></span></button>
               </div>
             </div>
           )}

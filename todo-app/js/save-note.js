@@ -15,7 +15,7 @@ class SaveNote extends React.Component {
         <div className="row mb-3">
             <form className="col form-inline save-note">
               <input type="text" className="form-control mr-2" value={this.state.text} onChange={this.handleChange}/>
-              <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Save</button>
+              <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}><span className="oi oi-file"></span></button>
             </form>
         </div>
     );
