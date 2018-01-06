@@ -12,10 +12,12 @@ class SaveNote extends React.Component {
   }
   render() {
     return (
-      <form className="form-inline">
-          <input type="text" className="form-control mb-2 mr-sm-2" value={this.state.text} onChange={this.handleChange}/>
-          <button type="submit" className="btn btn-primary mb-2" onClick={this.handleSubmit}>Save</button>
-      </form>
+        <div className="row mb-3">
+            <form className="col form-inline save-note">
+              <input type="text" className="form-control mr-2" value={this.state.text} onChange={this.handleChange}/>
+              <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Save</button>
+            </form>
+        </div>
     );
   }
   handleSubmit (e) {

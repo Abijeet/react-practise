@@ -29,16 +29,18 @@ class Note extends React.Component {
   render () {
     const isEditing = this.state.isEditing;
     return (
-      <div className="note-container container">
+      <div className="note-container">
           {isEditing ? (
             <SaveNote onSave={this.handleSave} note={this.props.note} />
           ): (
-            <div className="row">
-              <div className="note col-sm-10">
+            <div className="row mb-3">
+              <div className="note col pt-2">
                 {this.props.note.text}
               </div>
-              <button className="btn btn-default" onClick={this.handleEdit}>Edit</button>
-              <button className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
+              <div className="col-sm-auto">
+                <button className="btn btn-default mr-2" onClick={this.handleEdit}>Edit</button>
+                <button className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
+              </div>
             </div>
           )}
       </div>

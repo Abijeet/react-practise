@@ -1,0 +1,3 @@
+.save-note input[type="text"] {
+  flex-grow: 1;
+}
