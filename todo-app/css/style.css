@@ -1,3 +1,9 @@
 .save-note input[type="text"] {
   flex-grow: 1;
 }
+#root h1 {
+  margin: 0.4em 0em;
+}
+.note.complete {
+  text-decoration: line-through;
+}

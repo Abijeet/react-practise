@@ -14,8 +14,8 @@ class SaveNote extends React.Component {
     return (
         <div className="row mb-3">
             <form className="col form-inline save-note">
-              <input type="text" className="form-control mr-2" value={this.state.text} onChange={this.handleChange}/>
-              <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}><span className="oi oi-file"></span></button>
+              <input type="text" className="form-control mr-2" value={this.state.text} onChange={this.handleChange} placeholder="Enter your note here..."/>
+              <button type="submit" className="btn btn-primary" onClick={this.handleSubmit} title="Save"><span className="oi oi-file"></span></button>
             </form>
         </div>
     );
@@ -24,7 +24,7 @@ class SaveNote extends React.Component {
     e.preventDefault();
     let noteText = this.state.text;
     if (!noteText || noteText.trim().length === 0) {
-      alert('No text!');
+      alert('The note has no text.');
       return;
     }
 

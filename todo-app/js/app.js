@@ -8,13 +8,14 @@ class App extends React.Component {
 
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
   }
   render() {
     return (
       <div>
         <h1>TODO - List</h1>
         <SaveNote onSave={this.handleSave} note={null}/>
-        <NoteList notes={this.state.notes} onDelete={this.handleDelete} onEdit={this.handleSave}/>
+        <NoteList notes={this.state.notes} onDelete={this.handleDelete} onEdit={this.handleSave} onComplete={this.handleComplete}/>
       </div>
     );
   }
@@ -60,5 +61,19 @@ class App extends React.Component {
         notes: notes
       };
     });
+  }
+  handleComplete (noteToUpdate) {
+    this.setState((prevState) => {
+      let notes = prevState.notes;
+      for (let i = 0; i !== notes.length; ++i) {
+        if (notes[i].id === noteToUpdate.id) {
+          notes[i].isComplete = !noteToUpdate.isComplete;
+          break;
+        }
+      }
+      return {
+        notes: notes
+      };
+    })
   }
 }

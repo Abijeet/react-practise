@@ -4,6 +4,7 @@ class Note extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
     this.state = {
       isEditing: false
     };
@@ -26,6 +27,9 @@ class Note extends React.Component {
       isEditing: false
     });
   }
+  handleComplete () {
+    this.props.onComplete(this.props.note);
+  }
   render () {
     const isEditing = this.state.isEditing;
     return (
@@ -34,12 +38,17 @@ class Note extends React.Component {
             <SaveNote onSave={this.handleSave} note={this.props.note} />
           ): (
             <div className="row mb-3">
-              <div className="note col pt-2">
+              <div className={`note col pt-2 ${this.props.note.isComplete ? 'complete': ''}`}>
                 {this.props.note.text}
               </div>
               <div className="col-sm-auto">
-                <button className="btn btn-success mr-2" onClick={this.handleEdit}><span className="oi oi-pencil"></span></button>
-                <button className="btn btn-danger" onClick={this.handleDelete}><span className="oi oi-trash"></span></button>
+                <button className="btn btn-success mr-2" onClick={this.handleComplete} title={this.props.note.isComplete ? 'Mark as not done' : 'Mark as done'}>
+                  <span className={`oi ${ this.props.note.isComplete ? 'oi-x': 'oi-check'}`}></span>
+                </button>
+                <button className={`btn btn-info mr-2 ${this.props.note.isComplete ? 'd-none': ''}`} onClick={this.handleEdit}  title="Edit">
+                  <span className="oi oi-pencil"></span>
+                </button>
+                <button className="btn btn-danger" onClick={this.handleDelete} title="Delete"><span className="oi oi-trash"></span></button>
               </div>
             </div>
           )}
