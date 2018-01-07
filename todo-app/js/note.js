@@ -32,20 +32,21 @@ class Note extends React.Component {
   }
   render () {
     const isEditing = this.state.isEditing;
+    const note = this.props.note;
     return (
       <div className="note-container">
           {isEditing ? (
-            <SaveNote onSave={this.handleSave} note={this.props.note} />
+            <SaveNote onSave={this.handleSave} note={note} />
           ): (
             <div className="row mb-3">
-              <div className={`note col pt-2 ${this.props.note.isComplete ? 'complete': ''}`}>
-                {this.props.note.text}
+              <div className={`note col pt-2 ${note.isComplete ? 'complete': ''}`}>
+                {note.text}
               </div>
               <div className="col-sm-auto">
-                <button className="btn btn-success mr-2" onClick={this.handleComplete} title={this.props.note.isComplete ? 'Mark as not done' : 'Mark as done'}>
-                  <span className={`oi ${ this.props.note.isComplete ? 'oi-x': 'oi-check'}`}></span>
+                <button className="btn btn-success mr-2" onClick={this.handleComplete} title={note.isComplete ? 'Mark as not done' : 'Mark as done'}>
+                  <span className={`oi ${ note.isComplete ? 'oi-x': 'oi-check'}`}></span>
                 </button>
-                <button className={`btn btn-info mr-2 ${this.props.note.isComplete ? 'd-none': ''}`} onClick={this.handleEdit}  title="Edit">
+                <button className={`btn btn-info mr-2 ${note.isComplete ? 'd-none': ''}`} onClick={this.handleEdit}  title="Edit">
                   <span className="oi oi-pencil"></span>
                 </button>
                 <button className="btn btn-danger" onClick={this.handleDelete} title="Delete"><span className="oi oi-trash"></span></button>
